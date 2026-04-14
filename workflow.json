@@ -1,0 +1,322 @@
+{
+  "id": "tpl-201316197",
+  "name": "Stress Test Advisor to improve approval rate",
+  "description": "Stress Test Advisor to improve approval rate allocates ledger entries and settles customer profiles; applies decision gates and observability; orchestrates via Case Management to accelerate onboarding.",
+  "industry": "Banking & Finance",
+  "pattern": "Self-Verify",
+  "complexity": "Intermediate",
+  "rating": 4.6,
+  "downloads": 2726,
+  "favorites": 522,
+  "executionTime": "8 min",
+  "tags": [
+    "credit",
+    "aml",
+    "sanctions",
+    "self-verify",
+    "banking"
+  ],
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Transfer Intake",
+      "description": "Collect, validate and normalize cases from Payment Hub; attach a runId and timestamp for traceability."
+    },
+    {
+      "id": "generate-0",
+      "name": "Generate",
+      "description": "Execute generate phase for the Self-Verify pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "verify-1",
+      "name": "Verify",
+      "description": "Execute verify phase for the Self-Verify pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "portfolio-check-0",
+      "name": "Portfolio Check",
+      "description": "Portfolio Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "sanctions-screening-1",
+      "name": "Sanctions Screening",
+      "description": "Sanctions Screening across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "underwriting-2",
+      "name": "Underwriting",
+      "description": "Underwriting across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "finalize",
+      "name": "Regulatory Report",
+      "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to Fraud Platform; return response JSON for the client."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "intake",
+      "type": "agentbridge",
+      "data": {
+        "label": "Transfer Intake",
+        "description": "Collect, validate and normalize cases from Payment Hub; attach a runId and timestamp for traceability.",
+        "nodeType": "input",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 60,
+        "y": 120
+      }
+    },
+    {
+      "id": "generate-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Generate",
+        "description": "Execute generate phase for the Self-Verify pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 310,
+        "y": 120
+      }
+    },
+    {
+      "id": "verify-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Verify",
+        "description": "Execute verify phase for the Self-Verify pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 560,
+        "y": 120
+      }
+    },
+    {
+      "id": "portfolio-check-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Portfolio Check",
+        "description": "Portfolio Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 810,
+        "y": 120
+      }
+    },
+    {
+      "id": "sanctions-screening-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Sanctions Screening",
+        "description": "Sanctions Screening across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1060,
+        "y": 120
+      }
+    },
+    {
+      "id": "underwriting-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "Underwriting",
+        "description": "Underwriting across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1310,
+        "y": 120
+      }
+    },
+    {
+      "id": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "Regulatory Report",
+        "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to Fraud Platform; return response JSON for the client.",
+        "nodeType": "output",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1560,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "source": "intake",
+      "target": "generate-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-1",
+      "source": "generate-0",
+      "target": "verify-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-2",
+      "source": "verify-1",
+      "target": "portfolio-check-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-3",
+      "source": "portfolio-check-0",
+      "target": "sanctions-screening-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-4",
+      "source": "sanctions-screening-1",
+      "target": "underwriting-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-5",
+      "source": "underwriting-2",
+      "target": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    }
+  ],
+  "preview": "Transfer Intake → Generate → Verify → Portfolio Check → Sanctions Screening → Underwriting → Regulatory Report",
+  "featured": false,
+  "createdAt": "2025-04-26T14:18:37.637Z",
+  "author": "AgentBridge Team",
+  "deployments": 305,
+  "lastDeployed": "2026-03-18T17:51:07.223Z",
+  "configuration": {
+    "provider": "nvidia",
+    "region": "us-west-2",
+    "compute": "gpu-single"
+  },
+  "healthStatus": "healthy",
+  "deploymentCount": 139,
+  "githubRepo": "https://github.com/agentbridge/stress-test-advisor-to-improve-approval-rate",
+  "maintainer": "AgentBridge Team",
+  "agenticLayers": {
+    "reasoning": {
+      "modelType": "gpt-4o",
+      "reasoningPattern": "ReAct",
+      "contextWindow": 128000,
+      "memorySystem": "hybrid",
+      "decisionFramework": "Multi-Criteria Decision Analysis"
+    },
+    "orchestration": {
+      "workflowEngine": "n8n",
+      "coordinationPattern": "centralized",
+      "failoverStrategy": "retry",
+      "loadBalancing": "intelligent"
+    },
+    "protocol": {
+      "communicationProtocol": "MCP",
+      "messageFormat": "JSON",
+      "authenticationMethod": "OAuth2",
+      "encryptionStandard": "AES-256"
+    },
+    "governance": {
+      "policyEngine": "OPA",
+      "complianceStandards": [
+        "SOC2",
+        "GDPR"
+      ],
+      "auditTrail": true,
+      "riskAssessment": "medium",
+      "dataClassification": "internal"
+    },
+    "observability": {
+      "metricsCollection": "Prometheus",
+      "loggingFramework": "ELK",
+      "tracingSystem": "Jaeger",
+      "alertingRules": [],
+      "dashboardConfig": {
+        "layout": "grid",
+        "widgets": [
+          "metrics",
+          "logs",
+          "traces"
+        ],
+        "refreshInterval": 30
+      }
+    },
+    "intelligence": {
+      "learningCapability": "online",
+      "knowledgeBase": "vector-db",
+      "adaptationMechanism": "ml-based",
+      "performanceOptimization": "ai-driven"
+    }
+  },
+  "businessFunction": "data-preparation-node",
+  "autonomyLevel": "semi-autonomous",
+  "cognitiveCapabilities": [
+    {
+      "name": "Pattern Recognition",
+      "description": "Identifies patterns in business processes",
+      "confidenceLevel": 0.85,
+      "lastUpdated": "2026-04-14T14:18:37.690Z"
+    }
+  ],
+  "roiMetrics": {
+    "costSavings": 96060,
+    "timeReduction": 38,
+    "accuracyImprovement": 17,
+    "throughputIncrease": 33,
+    "errorReduction": 48
+  },
+  "complianceFramework": {
+    "standards": [
+      "SOC2",
+      "GDPR",
+      "ISO27001"
+    ],
+    "certifications": [
+      "SOC2 Type II"
+    ],
+    "auditFrequency": "monthly",
+    "lastAudit": "2026-02-15T20:02:00.610Z"
+  },
+  "scalingPolicy": {
+    "minInstances": 1,
+    "maxInstances": 10,
+    "scaleUpThreshold": 80,
+    "scaleDownThreshold": 20,
+    "cooldownPeriod": 300
+  }
+}
